@@ -9,7 +9,8 @@ $('#search-bar').on('keyup', onchange);
 
 
 // let api_url = 'https://restcountries.eu/rest/v2';
-let api_url = 'http://localhost:5000/api/countries';
+// let api_url = 'http://localhost:5000/api/countries';
+let api_url = '/api/countries';
 let dataPromise = getData()
 renderMainPage(dataPromise)
 
@@ -201,7 +202,8 @@ async function searchImages(query, start=1){
     // let cx = CX;
     // let google_api_url = `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${query}&start=${start}&searchType=image`;
     query=query.replace(' ', '+');
-    let google_api_url = `http://localhost:5000/api/images?query=${query}&start=${start}`;
+    // let google_api_url = `http://localhost:5000/api/images?query=${query}&start=${start}`;
+    let google_api_url = `/api/images?query=${query}&start=${start}`;
     let images = [];
 
     await fetch(google_api_url)
