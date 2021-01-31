@@ -8,7 +8,8 @@ $('#getAPI').on('click', onchange);
 $('#search-bar').on('keyup', onchange);
 
 
-let api_url = 'https://restcountries.eu/rest/v2';
+// let api_url = 'https://restcountries.eu/rest/v2';
+let api_url = 'http://localhost:5000/api/countries';
 let dataPromise = getData()
 renderMainPage(dataPromise)
 
@@ -17,14 +18,10 @@ function formatNumber(num){
 }
 
 async function getData(){
-    let countries = []
-    await fetch(api_url)
-    .then(res => res.json())
-    .then(data => {
-        data.forEach(country => {
-            countries.push(country)
-        })
-    })
+    let res = await fetch(api_url)
+    let data = await res.json()
+    countries = data.map(country => country)
+    
     return countries;
 }
 
@@ -200,12 +197,14 @@ function onClickSearch(target){
 }
 
 async function searchImages(query, start=1){
-    let key = APIKEY;
-    let cx = CX;
-    let google_api_url = `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${query}&start=${start}&searchType=image`;
+    // let key = APIKEY;
+    // let cx = CX;
+    // let google_api_url = `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${query}&start=${start}&searchType=image`;
+    query=query.replace(' ', '+');
+    let google_api_url = `http://localhost:5000/api/images?query=${query}&start=${start}`;
     let images = [];
 
-    await fetch(google_api_url)    
+    await fetch(google_api_url)
     .then(res => res.json())
     .then((data) => {
         data.items.forEach(item => {
