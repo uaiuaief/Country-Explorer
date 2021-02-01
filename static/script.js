@@ -72,7 +72,7 @@ async function onchange(){
 
 function defaultImg(img){
     img.onerror = '';
-    img.src = 'notfound.png'
+    img.src = '/static/notfound.png'
 }
 
 function renderSearchResultHTML(src){

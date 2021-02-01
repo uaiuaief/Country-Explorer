@@ -1,8 +1,12 @@
 import requests as req
 import os
+import json
 from flask import Flask, request, render_template, jsonify
 
 app = Flask(__name__)
+
+with open('./config.json') as config_file:
+    config = json.load(config_file)
 
 @app.route('/')
 def index():
@@ -19,8 +23,10 @@ def countries_data():
 
 @app.route('/api/images')
 def country_images():
-    sk = os.environ.get('GOOGLE_API_KEY') 
-    cx = os.environ.get('GOOGLE_CX') 
+    #sk = os.environ.get('GOOGLE_API_KEY') 
+    #cx = os.environ.get('GOOGLE_CX') 
+    sk = config.get('GOOGLE_API_KEY')
+    cx = config.get('GOOGLE_CX')
 
     query = request.args.get('query').replace(' ', '+')
     start = request.args.get('start')
@@ -57,4 +63,4 @@ def add_cors_headers(response):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
